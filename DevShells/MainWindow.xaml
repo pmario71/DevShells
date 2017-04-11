@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="MainWnd"
     Title="DevShells"
-    Width="183.434"
+    Width="217.368"
     Height="350"
     mc:Ignorable="d">
     <Window.Resources>
