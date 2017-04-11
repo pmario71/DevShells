@@ -8,7 +8,7 @@
         Title="MainWindow" Height="350" Width="183.434">
     <Window.Resources>
         <DataTemplate x:Key="Buttons" DataType="local:ShellConfiguration">
-            <Button Height="30" DockPanel.Dock="Top" Content="{Binding Path=Name}" 
+            <Button Height="40" DockPanel.Dock="Top" Content="{Binding Path=Name}" 
                     Command="{Binding ElementName=MainWnd, Path=CreateShellCommand, Mode=OneWay}" CommandParameter="{Binding Path=Name}" />
         </DataTemplate>
     </Window.Resources>
