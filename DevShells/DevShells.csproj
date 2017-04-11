@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ConfigurationReader.cs" />
     <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="MVVM\WeakFunc.cs" />
     <Compile Include="ShellConfiguration.cs" />
@@ -103,4 +104,5 @@
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.WinFX.targets" />
 </Project>

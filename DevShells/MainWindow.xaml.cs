@@ -31,11 +31,7 @@ namespace DevShells
         {
             InitializeComponent();
 
-            myShellConfigurations = new[]
-            {
-                new ShellConfiguration { Name = "ExtAppHosting", Path = "c:\\TFS\\ExtAppHosting\\bin\\x64\\Debug"},
-                new ShellConfiguration { Name = "via", Path = "c:\\TFS\\via\\Deploy\\bin\\x64\\Debug"},
-            };
+            myShellConfigurations = ConfigurationReader.ReadConfiguration();
             this.DataContext = myShellConfigurations;
         }
 
