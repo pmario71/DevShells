@@ -1,4 +1,4 @@
-﻿namespace DevShells
+﻿namespace DevShells.Configuration
 {
     class ShellConfiguration
     {

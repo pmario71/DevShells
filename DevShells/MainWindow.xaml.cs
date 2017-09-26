@@ -14,7 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using DevShells.Configuration;
 using DevShells.MVVM;
+using DevShells.Utils;
 
 
 namespace DevShells
@@ -48,7 +50,10 @@ namespace DevShells
             var cfg = myShellConfigurations.Single(c => c.Name == configurationName);
 
             string filename= "C:\\Windows\\System32\\cmd.exe";
-            string args= "/c \"devshell\"";
+
+            //var batch = BatchFileCreator.Create(cfg);
+            //string args= $"/k \"{batch}\"";
+            string args = $"/k \"devshell\"";
 
             var processStartInfo = new ProcessStartInfo(filename, args);
             processStartInfo.WorkingDirectory = cfg.Path;

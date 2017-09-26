@@ -5,13 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:DevShells"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:configuration="clr-namespace:DevShells.Configuration"
     x:Name="MainWnd"
     Title="DevShells"
     Width="217.368"
     Height="350"
     mc:Ignorable="d">
     <Window.Resources>
-        <DataTemplate x:Key="Buttons" DataType="local:ShellConfiguration">
+        <DataTemplate x:Key="Buttons" DataType="configuration:ShellConfiguration">
             <Button
                 Height="40"
                 Command="{Binding ElementName=MainWnd, Path=CreateShellCommand, Mode=OneWay}"

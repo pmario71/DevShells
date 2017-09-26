@@ -61,11 +61,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ConfigurationReader.cs" />
+    <Compile Include="Configuration\ConfigurationReader.cs" />
     <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="MVVM\WeakFunc.cs" />
-    <Compile Include="ShellConfiguration.cs" />
+    <Compile Include="Configuration\ShellConfiguration.cs" />
     <Compile Include="MVVM\WeakAction.cs" />
+    <Compile Include="Utils\BatchFileCreator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -106,7 +107,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\Console.ico" />
   </ItemGroup>
