@@ -2,15 +2,18 @@
     x:Class="DevShells.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:configuration="clr-namespace:DevShells.Configuration"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:DevShells"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:configuration="clr-namespace:DevShells.Configuration"
     x:Name="MainWnd"
     Title="DevShells"
     Width="217.368"
     Height="350"
     mc:Ignorable="d">
+    <Window.InputBindings>
+        <KeyBinding Key="F5" Command="{Binding ReloadConfigCommand, ElementName=MainWnd}" />
+    </Window.InputBindings>
     <Window.Resources>
         <DataTemplate x:Key="Buttons" DataType="configuration:ShellConfiguration">
             <Button
@@ -18,9 +21,22 @@
                 Command="{Binding ElementName=MainWnd, Path=CreateShellCommand, Mode=OneWay}"
                 CommandParameter="{Binding Path=Name}"
                 Content="{Binding Path=Name}"
-                DockPanel.Dock="Top" />
+                DockPanel.Dock="Top"
+                ToolTip="{Binding Path=Path}" />
         </DataTemplate>
     </Window.Resources>
-    <ItemsControl ItemTemplate="{StaticResource Buttons}" ItemsSource="{Binding}" />
+    <DockPanel LastChildFill="True">
+        <Button
+            Command="{Binding OpenConfigCommand, ElementName=MainWnd}"
+            Content="Open Config"
+            DockPanel.Dock="Bottom" />
+        <ItemsControl ItemTemplate="{StaticResource Buttons}" ItemsSource="{Binding}" />
+    </DockPanel>
 </Window>
+
+
+
+
+
+
 

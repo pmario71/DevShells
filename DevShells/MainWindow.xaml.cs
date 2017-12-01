@@ -27,7 +27,9 @@ namespace DevShells
     public partial class MainWindow : Window
     {
         private RelayCommand<string> myCreateShellCommand;
-        private readonly ShellConfiguration[] myShellConfigurations;
+        private ShellConfiguration[] myShellConfigurations;
+        private RelayCommand<string> myOpenConfigCommand;
+        private RelayCommand<string> myReloadConfigCommand;
 
         public MainWindow()
         {
@@ -59,6 +61,38 @@ namespace DevShells
             processStartInfo.WorkingDirectory = cfg.Path;
 
             Process.Start(processStartInfo);
+        }
+
+        public ICommand OpenConfigCommand
+        {
+            get
+            {
+                myOpenConfigCommand = myOpenConfigCommand ?? new RelayCommand<string>(OnOpenConfig);
+                return myOpenConfigCommand;
+            }
+        }
+
+        private void OnOpenConfig(string obj)
+        {
+            const string vsCode = @"C:\Program Files\Microsoft VS Code\Code.exe";
+
+            var jsonConfigurationFile = ConfigurationReader.jsonConfigurationFile;
+            Process.Start(vsCode, jsonConfigurationFile);
+        }
+
+        public ICommand ReloadConfigCommand
+        {
+            get
+            {
+                myReloadConfigCommand = myReloadConfigCommand ?? new RelayCommand<string>(OnReloadConfig);
+                return myReloadConfigCommand;
+            }
+        }
+
+        private void OnReloadConfig(string obj)
+        {
+            myShellConfigurations = ConfigurationReader.ReadConfiguration();
+            this.DataContext = myShellConfigurations;
         }
     }
 }
