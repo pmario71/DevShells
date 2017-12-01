@@ -29,7 +29,8 @@
         <Button
             Command="{Binding OpenConfigCommand, ElementName=MainWnd}"
             Content="Open Config"
-            DockPanel.Dock="Bottom" />
+            DockPanel.Dock="Bottom"
+            ToolTip="Hit F5 to refresh after updating the file!" />
         <ItemsControl ItemTemplate="{StaticResource Buttons}" ItemsSource="{Binding}" />
     </DockPanel>
 </Window>

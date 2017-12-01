@@ -30,7 +30,7 @@ namespace DevShells
                 {
                     EventLog.CreateEventSource(eventSource, "Application");
                 }
-                EventLog.WriteEntry(eventSource, exString);
+                EventLog.WriteEntry(eventSource, exString, EventLogEntryType.Error);
 
                 MessageBox.Show($"Full error is logged to EventLog!\r\n{exString}", "Unexpected Error");
                 args.Handled = true;
