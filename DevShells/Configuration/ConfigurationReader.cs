@@ -7,7 +7,7 @@ namespace DevShells.Configuration
 {
     internal class ConfigurationReader
     {
-        public static string jsonConfigurationFile = "DevShellsConfig.json";
+        public static string jsonConfigurationFile = $"{Path.GetDirectoryName(typeof(ConfigurationReader).Assembly.Location)}\\DevShellsConfig.json";
 
         public static ShellConfiguration[] ReadConfiguration()
         {

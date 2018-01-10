@@ -9,7 +9,7 @@ $dest = 'D:\Tools\Scripts'
 Copy-Item -Path "$source\$app" -Destination $dest -Force
 Copy-Item -Path "$source\Newtonsoft.Json.dll" -Destination $dest -Force
 
-if (dev!(Test-Path "$dest\$app.config"))
+if (!(Test-Path "$dest\$app.config"))
 {
 	Copy-Item -Path "$source\$app.config" -Destination $dest
 }

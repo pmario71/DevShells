@@ -1,8 +1,9 @@
 # Ignore binaries
 packages/
-.vs/
 DevShells/bin/
 DevShells/obj/
+DevShellsTests/bin/
+DevShellsTests/obj/
 
 # Windows image file caches
 Thumbs.db
@@ -51,4 +52,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
-*.suo
+
+.vs/
+**/*.suo
+**/*.user
