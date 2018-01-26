@@ -76,7 +76,7 @@ namespace DevShells
         {
             const string vsCode = @"C:\Program Files\Microsoft VS Code\Code.exe";
 
-            var jsonConfigurationFile = ConfigurationReader.jsonConfigurationFile;
+            var jsonConfigurationFile = ConfigurationReader.JsonConfigurationFile;
             Process.Start(vsCode, jsonConfigurationFile);
         }
 

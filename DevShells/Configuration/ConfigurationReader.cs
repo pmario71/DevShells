@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 
 using Newtonsoft.Json;
@@ -7,11 +8,11 @@ namespace DevShells.Configuration
 {
     internal class ConfigurationReader
     {
-        public static string jsonConfigurationFile = $"{Path.GetDirectoryName(typeof(ConfigurationReader).Assembly.Location)}\\DevShellsConfig.json";
-
+        public static readonly string JsonConfigurationFile = $"{Path.GetDirectoryName(typeof(ConfigurationReader).Assembly.Location)}\\DevShellsConfig.json";
+   
         public static ShellConfiguration[] ReadConfiguration()
         {
-            if (!File.Exists(jsonConfigurationFile))
+            if (!File.Exists(JsonConfigurationFile))
             {
                 var shellConfigurations = new[]
                 {
@@ -24,13 +25,13 @@ namespace DevShells.Configuration
 
                 return shellConfigurations;
             }
-            return JsonConvert.DeserializeObject<ShellConfiguration[]>(File.ReadAllText(jsonConfigurationFile));
+            return JsonConvert.DeserializeObject<ShellConfiguration[]>(File.ReadAllText(JsonConfigurationFile));
         }
 
         private static void Save(ShellConfiguration[] shellConfigurations)
         {
             var serializeObject = JsonConvert.SerializeObject(shellConfigurations);
-            File.WriteAllText(jsonConfigurationFile, serializeObject);
+            File.WriteAllText(JsonConfigurationFile, serializeObject);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace DevShellsTests
         [Test]
         public void ConfigFile_resolved_correctly()
         {
-            var filepath = ConfigurationReader.jsonConfigurationFile;
+            var filepath = ConfigurationReader.JsonConfigurationFile;
 
             var directoryName = Path.GetDirectoryName(filepath);
 
