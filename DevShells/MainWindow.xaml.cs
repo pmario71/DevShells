@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -74,10 +75,37 @@ namespace DevShells
 
         private void OnOpenConfig(string obj)
         {
-            const string vsCode = @"C:\Program Files\Microsoft VS Code\Code.exe";
+            string vsCode = DetectVSCodeLocation();
 
             var jsonConfigurationFile = ConfigurationReader.JsonConfigurationFile;
+
+            if (vsCode == null)
+            {
+                Clipboard.SetText(jsonConfigurationFile);
+                MessageBox.Show("Path to VS Code not found! Path to config file copied to Clipboard.", "Attention");
+                return;
+            }
+
             Process.Start(vsCode, jsonConfigurationFile);
+        }
+
+        private static string DetectVSCodeLocation()
+        {
+            string[] paths = new[]
+            {
+                @"C:\Users\plenma66\AppData\Local\Programs\Microsoft VS Code\Code.exe",
+                @"C:\Program Files\Microsoft VS Code\Code.exe"
+            };
+
+            foreach (var path in paths)
+            {
+                if (File.Exists(path))
+                {
+                    return path;
+                }
+            }
+            
+            return null;
         }
 
         public ICommand ReloadConfigCommand
