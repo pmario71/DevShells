@@ -36,7 +36,7 @@ namespace DevShells
         {
             InitializeComponent();
 
-            myShellConfigurations = ConfigurationReader.ReadConfiguration();
+            myShellConfigurations = ConfigurationReader.ReadConfiguration().ShellConfigurations;
             this.DataContext = myShellConfigurations;
         }
 
@@ -119,7 +119,7 @@ namespace DevShells
 
         private void OnReloadConfig(string obj)
         {
-            myShellConfigurations = ConfigurationReader.ReadConfiguration();
+            myShellConfigurations = ConfigurationReader.ReadConfiguration().ShellConfigurations;
             this.DataContext = myShellConfigurations;
         }
     }

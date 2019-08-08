@@ -8,9 +8,33 @@ namespace DevShells.Configuration
 {
     internal class ConfigurationReader
     {
-        public static readonly string JsonConfigurationFile = $"{Path.GetDirectoryName(typeof(ConfigurationReader).Assembly.Location)}\\DevShellsConfig.json";
-   
-        public static ShellConfiguration[] ReadConfiguration()
+        private static string _jsonConfigurationFile = Path.Combine(  StaticConfiguration.BaseFolder, "DevShellsConfig.json");
+
+        private static bool _initialized;
+
+        public static string JsonConfigurationFile
+        {
+            get
+            {
+                if (!_initialized)
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(_jsonConfigurationFile));
+                    _initialized = true;
+                }
+
+                return _jsonConfigurationFile;
+            }
+            internal set
+            {
+                if (_initialized)
+                {
+                    throw new InvalidOperationException("Manipulating config location is only possible before first consumer has accessed the location!");
+                }
+                _jsonConfigurationFile = value;
+            }
+        }
+
+        public static DevShellConfiguration ReadConfiguration()
         {
             if (!File.Exists(JsonConfigurationFile))
             {
@@ -20,15 +44,19 @@ namespace DevShells.Configuration
                     new ShellConfiguration { Name = "via", Path = "c:\\TFS\\via\\Deploy\\bin\\x64\\Debug"},
                     new ShellConfiguration { Name = "VS2017_WF", Path = "D:\\TFS\\vs2017\\WF\\bin\\x64\\Debug"},
                 };
+                var config = new DevShellConfiguration()
+                {
+                    ShellConfigurations = shellConfigurations
+                };
 
-                Save(shellConfigurations);
+                Save(config);
 
-                return shellConfigurations;
+                return config;
             }
-            return JsonConvert.DeserializeObject<ShellConfiguration[]>(File.ReadAllText(JsonConfigurationFile));
+            return JsonConvert.DeserializeObject<DevShellConfiguration>(File.ReadAllText(JsonConfigurationFile));
         }
 
-        private static void Save(ShellConfiguration[] shellConfigurations)
+        private static void Save(object shellConfigurations)
         {
             var serializeObject = JsonConvert.SerializeObject(shellConfigurations);
             File.WriteAllText(JsonConfigurationFile, serializeObject);

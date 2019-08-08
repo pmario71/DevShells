@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
+using DevShells.Configuration;
+using DevShells.Services;
+using Serilog;
+using SimpleInjector;
 
 
 namespace DevShells
@@ -17,25 +22,50 @@ namespace DevShells
     /// </summary>
     public partial class App : Application
     {
+        private Container _container;
+
+        readonly CancellationTokenSource _tokenSource = new CancellationTokenSource();
         const string eventSource = "DevShells";
 
-        protected override void OnStartup(StartupEventArgs e)
+        public App()
         {
-            Dispatcher.UnhandledException += (sender, args) =>
+            _container = new Container();
+            SetupLogging(_container);
+
+            _container.RegisterSingleton<IConfigAccess, ConfigAccess>();
+            _container.RegisterSingleton<INotifications, NotificationsSvc>();
+            _container.RegisterSingleton<MainWindow>();
+            _container.Verify();
+
+            var wnd = _container.GetInstance<MainWindow>();
+            this.MainWindow = wnd;
+
+            wnd.Show();
+        }
+
+
+
+        private void OnSessionEnding(object sender, SessionEndingCancelEventArgs e)
+        {
+            var updater = _container.GetInstance<Updater>();
+            if (updater.IsUpdatePending)
             {
-                var exString = args.Exception.ToString();
-                
-                if (!EventLog.SourceExists(eventSource))
-                {
-                    EventLog.CreateEventSource(eventSource, "Application");
-                }
-                EventLog.WriteEntry(eventSource, exString, EventLogEntryType.Error);
+                MessageBox.Show("Pending update has been downloaded and will be applied on next start.", "Update pending ..");
+            }
 
-                MessageBox.Show($"Full error is logged to EventLog!\r\n{exString}", "Unexpected Error");
-                args.Handled = true;
-            };
+            _tokenSource.Cancel();
+            _container.Dispose();
+        }
 
-            base.OnStartup(e);
+        private void SetupLogging(Container container)
+        {
+            //string logFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "Snippet\\Snippet.log";
+            //StaticConfigration.LogFile = logFilePath;
+            var log = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.File(Path.Combine(StaticConfiguration.BaseFolder,"DevShell.log"), rollOnFileSizeLimit:true)
+                .CreateLogger();
+            _container.Register<ILogger>(() => log, Lifestyle.Singleton);
         }
     }
 }
